@@ -37,8 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
-        isNetworkOk = NetworkHelper.isNetworkAvailable(this);
-        logOutput("Network:"+isNetworkOk);
+        NetworkIsConnected();
 
         btnRun.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,7 +46,18 @@ public class MainActivity extends AppCompatActivity {
                 startService(intent);
             }
         });
-
+    }
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void NetworkIsConnected(){
+        isNetworkOk = NetworkHelper.isNetworkAvailable(this);
+        if(isNetworkOk == true){
+            String connected = "Connected";
+            logOutput("Network is :"+connected);
+        }
+        else {
+            String connected2 = "Not connected";
+            logOutput("Network is :"+connected2);
+        }
     }
     private void logOutput(String data){
         Log.d(TAG,"logOutput:"+data);
@@ -64,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mReceiver,new IntentFilter(MyIntentService.SERVICE_MESSAGE));
     }
-
     @Override
     protected void onStop() {
         super.onStop();
