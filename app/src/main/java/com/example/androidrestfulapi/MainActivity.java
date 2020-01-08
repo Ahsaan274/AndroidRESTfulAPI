@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.example.androidrestfulapi.network.MyIntentService;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String TAG = "MyTag";
+    public static final String TAG = "MyTag!";
     private TextView mLog;
     Button btnRun;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
