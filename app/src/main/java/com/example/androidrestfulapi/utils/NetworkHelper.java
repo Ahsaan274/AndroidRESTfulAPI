@@ -12,9 +12,14 @@ public class NetworkHelper{
     public static boolean isNetworkAvailable(Context context){
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE   );
 
-        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+        try {
+            NetworkInfo info = connectivityManager.getActiveNetworkInfo();
 
-        return info != null && info.isConnectedOrConnecting();
+            return info != null && info.isConnectedOrConnecting();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
 
     }
 }

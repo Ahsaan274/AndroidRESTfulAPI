@@ -1,5 +1,6 @@
 package com.example.androidrestfulapi;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -7,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,10 +16,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.androidrestfulapi.network.MyIntentService;
+import com.example.androidrestfulapi.utils.NetworkHelper;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String TAG = "MyTag!!!";
+    public static final String TAG = "MyTag";
     private TextView mLog;
+    private boolean isNetworkOk;
     Button btnRun;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -27,11 +31,14 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        isNetworkOk = NetworkHelper.isNetworkAvailable(this);
+        logOutput("Network:"+isNetworkOk);
 
         btnRun.setOnClickListener(new View.OnClickListener() {
             @Override
